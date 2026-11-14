@@ -174,7 +174,7 @@ export default async function () {
                 <div className="rounded-2xl p-6 bg-gradient-to-br from-[#00baf2] to-[#002970] text-white shadow-md">
                     <div className="text-xs uppercase tracking-widest opacity-80">Offer</div>
                     <div className="text-xl font-bold mt-1">Add ₹500, get a reward</div>
-                    <div className="text-sm opacity-80 mt-1">Demo offer. No real money involved.</div>
+                    <div className="text-sm opacity-80 mt-1">Instant cashback credited to your wallet balance.</div>
                 </div>
             </div>
         </div>

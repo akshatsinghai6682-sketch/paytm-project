@@ -32,10 +32,6 @@ export const Appbar = ({
                     Digital Wallet
                 </div>
             </div>
-
-            <span className="ml-1 rounded-full border border-[#00baf2]/60 px-2 py-0.5 text-[10px] font-semibold text-[#00baf2]">
-                DEMO
-            </span>
         </div>
 
         <div className="flex items-center gap-4">
