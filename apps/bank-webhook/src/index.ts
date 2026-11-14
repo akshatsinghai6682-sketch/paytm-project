@@ -5,6 +5,11 @@ const app = express();
 app.use(express.json())
 
 app.post("/hdfcWebhook", async (req, res) => {
+    const webhookSecret = process.env.BANK_WEBHOOK_SECRET;
+    if (webhookSecret && req.headers["x-webhook-secret"] !== webhookSecret) {
+        return res.status(401).json({ message: "Unauthorized webhook" });
+    }
+
     const token = req.body.token;
 
     if (!token || typeof token !== "string") {
@@ -26,9 +31,10 @@ app.post("/hdfcWebhook", async (req, res) => {
                 return { code: 200, message: "Already processed" };
             }
 
-            await tx.balance.updateMany({
+            await tx.balance.upsert({
                 where: { userId: txn.userId },
-                data: { amount: { increment: txn.amount } }
+                update: { amount: { increment: txn.amount } },
+                create: { userId: txn.userId, amount: txn.amount, locked: 0 }
             });
             await tx.onRampTransaction.update({
                 where: { token },
@@ -45,4 +51,7 @@ app.post("/hdfcWebhook", async (req, res) => {
     }
 });
 
-app.listen(3003);
+const PORT = process.env.PORT || 3003;
+app.listen(PORT, () => {
+    console.log(`Bank webhook running on port ${PORT}`);
+});

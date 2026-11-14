@@ -1,11 +1,11 @@
-import React from "react";
+import type { ReactNode } from "react";
 
 export function Card({
   title,
   children,
 }: {
   title: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }): JSX.Element {
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">

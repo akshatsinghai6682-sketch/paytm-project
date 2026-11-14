@@ -25,29 +25,49 @@ export async function p2pTransfer(to: string, amount: number) {
         return { ok: false, message: "You can't send money to yourself" }
     }
 
+    const fromId = Number(from);
+    const toId = toUser.id;
+    const [firstId, secondId] = [fromId, toId].sort((a, b) => a - b);
+
     try {
         await prisma.$transaction(async (tx) => {
-            await tx.$queryRaw`SELECT * FROM "Balance" WHERE "userId" = ${Number(from)} FOR UPDATE`;
+            // Lock balances in deterministic order by userId to prevent deadlocks
+            await tx.$queryRaw`SELECT * FROM "Balance" WHERE "userId" IN (${firstId}, ${secondId}) ORDER BY "userId" FOR UPDATE`;
+
             const fromBalance = await tx.balance.findUnique({
-                where: { userId: Number(from) },
+                where: { userId: fromId },
             });
             if (!fromBalance || fromBalance.amount < amount) {
                 throw new Error('Insufficient funds');
             }
 
+            // Ensure recipient balance record exists
+            const toBalance = await tx.balance.findUnique({
+                where: { userId: toId },
+            });
+            if (!toBalance) {
+                await tx.balance.create({
+                    data: {
+                        userId: toId,
+                        amount: 0,
+                        locked: 0
+                    }
+                });
+            }
+
             await tx.balance.update({
-                where: { userId: Number(from) },
+                where: { userId: fromId },
                 data: { amount: { decrement: amount } },
             });
 
             await tx.balance.update({
-                where: { userId: toUser.id },
+                where: { userId: toId },
                 data: { amount: { increment: amount } },
             });
             await tx.p2pTransfer.create({
                 data: {
-                    fromUserId: Number(from),
-                    toUserId: toUser.id,
+                    fromUserId: fromId,
+                    toUserId: toId,
                     amount,
                     timestamp: new Date()
                 }

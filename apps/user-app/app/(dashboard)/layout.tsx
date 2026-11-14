@@ -1,5 +1,6 @@
 import { Toaster } from "sonner";
 import { SidebarItem } from "../../components/SidebarItem";
+import { MobileNavItem } from "../../components/MobileNavItem";
 
 export default function Layout({
   children,
@@ -9,7 +10,8 @@ export default function Layout({
   return (
     <div className="flex min-h-screen bg-[#f5f9fc]">
         <Toaster position="bottom-right" richColors />
-        <div className="w-64 shrink-0 bg-white border-r border-slate-200 pt-8">
+        {/* Desktop Sidebar */}
+        <aside className="hidden md:block w-64 shrink-0 bg-white border-r border-slate-200 pt-8 shadow-sm">
             <div className="px-6 pb-4 text-xs font-semibold uppercase tracking-wider text-slate-400">
                 Menu
             </div>
@@ -19,10 +21,20 @@ export default function Layout({
                 <SidebarItem href={"/transactions"} icon={<TransactionsIcon />} title="Transactions" />
                 <SidebarItem href={"/p2p"} icon={<P2PTransferIcon />} title="P2P Transfer" />
             </div>
-        </div>
-        <div className="flex-1 min-w-0 px-8 pb-10">
+        </aside>
+
+        {/* Main Content Area */}
+        <main className="flex-1 min-w-0 px-4 sm:px-8 pb-24 md:pb-10">
             {children}
-        </div>
+        </main>
+
+        {/* Mobile Bottom Navigation */}
+        <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-sm border-t border-slate-200 flex justify-around py-1 shadow-lg md:hidden">
+            <MobileNavItem href={"/dashboard"} icon={<HomeIcon />} title="Home" />
+            <MobileNavItem href={"/transfer"} icon={<TransferIcon />} title="Transfer" />
+            <MobileNavItem href={"/transactions"} icon={<TransactionsIcon />} title="Activity" />
+            <MobileNavItem href={"/p2p"} icon={<P2PTransferIcon />} title="P2P" />
+        </nav>
     </div>
   );
 }
