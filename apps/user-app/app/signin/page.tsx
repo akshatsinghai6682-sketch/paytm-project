@@ -75,7 +75,7 @@ export default function SigninPage() {
                     </div>
                     <div className="text-left">
                         <div className="text-2xl font-extrabold text-white tracking-tight">
-                            Pay<span className="text-[#00baf2]">TM</span>
+                            Pay<span className="text-[#00baf2]">Flow</span>
                         </div>
                         <div className="text-[11px] uppercase tracking-[0.25em] text-white/70 font-semibold">
                             Digital Wallet
@@ -110,7 +110,7 @@ export default function SigninPage() {
 
                 <div className="mb-6">
                     <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
-                        {isSignUp ? "Open PayTM Wallet" : "Welcome back"}
+                        {isSignUp ? "Open PayFlow Wallet" : "Welcome back"}
                     </h1>
                     <p className="text-xs text-slate-500 mt-1">
                         {isSignUp
@@ -225,9 +225,10 @@ export default function SigninPage() {
                 </div>
             </div>
 
-            {/* Bottom copyright */}
-            <div className="mt-6 text-xs text-white/60">
-                PayTM Digital Wallet & E-Commerce Platform
+            {/* Bottom copyright & disclaimer */}
+            <div className="mt-6 text-center text-xs text-white/70 space-y-1">
+                <div>PayFlow Digital Wallet &amp; E-Commerce Platform</div>
+                <div className="text-[10px] text-white/50">Portfolio Project by Akshat Singhai • Simulated Fintech Demonstration</div>
             </div>
         </div>
     );

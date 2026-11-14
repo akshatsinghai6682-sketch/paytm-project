@@ -4,8 +4,8 @@ import { Providers } from "../provider";
 import { AppbarClient } from "../components/AppbarClient";
 
 export const metadata: Metadata = {
-  title: "PayTM Wallet",
-  description: "Secure, real-time digital wallet",
+  title: "PayFlow Wallet",
+  description: "Secure, real-time digital wallet and e-commerce platform",
 };
 
 export default function RootLayout({

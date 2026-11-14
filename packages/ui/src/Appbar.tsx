@@ -26,7 +26,7 @@ export const Appbar = ({
             {/* wordmark + tagline */}
             <div className="leading-tight">
                 <div className="text-xl font-bold text-white tracking-tight">
-                    Pay<span className="text-[#00baf2]">TM</span>
+                    Pay<span className="text-[#00baf2]">Flow</span>
                 </div>
                 <div className="text-[10px] uppercase tracking-[0.2em] text-white/60">
                     Digital Wallet

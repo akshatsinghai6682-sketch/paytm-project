@@ -175,13 +175,13 @@ export function StoreView({ initialBalance }: { initialBalance: number }) {
         <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div className="max-w-xl">
             <span className="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider bg-white/20 backdrop-blur-md rounded-full text-white mb-3">
-              PayTM Mall & Store
+              PayFlow Store
             </span>
             <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
               Shop & Pay with Your Wallet
             </h1>
             <p className="mt-2 text-sm sm:text-base text-white/80">
-              Browse top gadgets, brand gift cards, and fashion. Enjoy instant 1-click checkout powered by your secure PayTM digital balance.
+              Browse top gadgets, brand gift cards, and fashion. Enjoy instant 1-click checkout powered by your secure PayFlow digital balance.
             </p>
           </div>
 
@@ -322,7 +322,7 @@ export function StoreView({ initialBalance }: { initialBalance: number }) {
                 <span>₹{selectedProduct.originalPrice}</span>
               </div>
               <div className="flex justify-between text-green-600 font-medium">
-                <span>PayTM Wallet Discount</span>
+                <span>PayFlow Wallet Discount</span>
                 <span>-₹{selectedProduct.originalPrice - selectedProduct.price}</span>
               </div>
               <div className="border-t border-slate-200 pt-2 flex justify-between font-bold text-slate-900 text-base">
@@ -338,7 +338,7 @@ export function StoreView({ initialBalance }: { initialBalance: number }) {
                   Payment Method
                 </div>
                 <div className="text-sm font-bold text-[#002970] mt-0.5 flex items-center gap-1.5">
-                  <span>💳 PayTM Wallet</span>
+                  <span>💳 PayFlow Wallet</span>
                 </div>
               </div>
               <div className="text-right">
