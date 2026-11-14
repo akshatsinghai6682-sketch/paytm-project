@@ -5,20 +5,25 @@ import { Select } from "@repo/ui/select";
 import { useState } from "react";
 import { TextInput } from "@repo/ui/textinput";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 import { createOnRampTransaction } from "../app/lib/actions/createOnRamptxn";
+import { payTransaction } from "../app/lib/actions/mockBank";
 
 const SUPPORTED_BANKS = [{
     name: "HDFC Bank",
-    redirectUrl: "https://netbanking.hdfcbank.com"
 }, {
     name: "Axis Bank",
-    redirectUrl: "https://www.axisbank.com/"
+}, {
+    name: "State Bank of India",
+}, {
+    name: "ICICI Bank",
 }];
 
 export const AddMoney = () => {
-    const [redirectUrl, setRedirectUrl] = useState(SUPPORTED_BANKS[0]?.redirectUrl);
-    const [provider, setProvider] = useState(SUPPORTED_BANKS[0]?.name || "");
-    const [value, setValue] = useState(0)
+    const router = useRouter();
+    const [provider, setProvider] = useState(SUPPORTED_BANKS[0]?.name || "HDFC Bank");
+    const [value, setValue] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     return <Card title="Add Money">
     <div className="w-full">
@@ -28,9 +33,8 @@ export const AddMoney = () => {
         <div className="py-4 text-left">
             Bank
         </div>
-        <Select onSelect={(value) => {
-            setRedirectUrl(SUPPORTED_BANKS.find(x => x.name === value)?.redirectUrl || "");
-            setProvider(SUPPORTED_BANKS.find(x => x.name === value)?.name || "");
+        <Select onSelect={(val) => {
+            setProvider(val);
         }} options={SUPPORTED_BANKS.map(x => ({
             key: x.name,
             value: x.name
@@ -41,16 +45,33 @@ export const AddMoney = () => {
                     toast.error("Enter an amount greater than 0");
                     return;
                 }
-                const res = await createOnRampTransaction(provider, value);
-                if (res?.message !== "Done") {
-                    toast.error("Couldn't start the payment. Log in again and retry.");
-                    return;
+                setLoading(true);
+                toast.info(`Connecting to ${provider} simulated gateway...`);
+                try {
+                    const res = await createOnRampTransaction(provider, value);
+                    if (res?.message !== "Done" || !res.token) {
+                        toast.error("Couldn't start the deposit. Please log in and retry.");
+                        setLoading(false);
+                        return;
+                    }
+
+                    // Complete simulated bank authorization and balance credit
+                    const payRes = await payTransaction(res.token);
+                    if (payRes.ok) {
+                        toast.success(`₹${value.toLocaleString("en-IN")} credited to your wallet balance from ${provider}!`);
+                        setTimeout(() => {
+                            router.refresh();
+                        }, 500);
+                    } else {
+                        toast.error(payRes.message || "Simulated deposit failed");
+                    }
+                } catch (e) {
+                    toast.error("Failed to complete deposit. Please retry.");
+                } finally {
+                    setLoading(false);
                 }
-                toast.success(`Redirecting to ${provider}…`);
-                await new Promise(r => setTimeout(r, 900));
-                window.location.href = redirectUrl || "";
             }}>
-            Add Money
+            {loading ? "Processing Deposit..." : "Add Money"}
             </Button>
         </div>
     </div>

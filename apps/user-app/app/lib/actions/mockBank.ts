@@ -3,8 +3,6 @@ import prisma from "@repo/db/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth";
 
-const WEBHOOK_URL = process.env.BANK_WEBHOOK_URL || "http://localhost:3003";
-
 export async function payTransaction(token: string) {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
@@ -19,40 +17,21 @@ export async function payTransaction(token: string) {
     }
 
     try {
-        const headers: Record<string, string> = { "Content-Type": "application/json" };
-        if (process.env.BANK_WEBHOOK_SECRET) {
-            headers["x-webhook-secret"] = process.env.BANK_WEBHOOK_SECRET;
-        }
-
-        const res = await fetch(`${WEBHOOK_URL}/hdfcWebhook`, {
-            method: "POST",
-            headers,
-            body: JSON.stringify({ token }),
-            cache: "no-store"
-        });
-        const data = await res.json().catch(() => ({}));
-        if (!res.ok) {
-            return { ok: false, message: data.message || "Payment failed" };
-        }
-        return { ok: true, message: data.message || "Captured" };
-    } catch (e) {
-        // Fallback: capture directly in database if separate bank-webhook daemon is not running
-        try {
-            await prisma.$transaction(async (tx) => {
-                await tx.balance.upsert({
-                    where: { userId: txn.userId },
-                    update: { amount: { increment: txn.amount } },
-                    create: { userId: txn.userId, amount: txn.amount, locked: 0 }
-                });
-                await tx.onRampTransaction.update({
-                    where: { token },
-                    data: { status: "Success" }
-                });
+        await prisma.$transaction(async (tx) => {
+            await tx.balance.upsert({
+                where: { userId: txn.userId },
+                update: { amount: { increment: txn.amount } },
+                create: { userId: txn.userId, amount: txn.amount, locked: 0 }
             });
-            return { ok: true, message: "Captured" };
-        } catch (dbErr) {
-            return { ok: false, message: "Can't complete payment. Please retry." };
-        }
+            await tx.onRampTransaction.update({
+                where: { token },
+                data: { status: "Success" }
+            });
+        });
+        return { ok: true, message: "Captured" };
+    } catch (e) {
+        console.error("Payment capture error:", e);
+        return { ok: false, message: "Can't complete payment. Please retry." };
     }
 }
 
