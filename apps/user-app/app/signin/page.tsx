@@ -57,27 +57,24 @@ export default function SigninPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#001845] via-[#002970] to-[#004e92] flex flex-col justify-center items-center p-4 relative overflow-hidden">
+        <div className="min-h-screen bg-[#f5f5f7] text-[#1d1d1f] flex flex-col justify-center items-center p-4 relative overflow-hidden">
             <Toaster position="top-center" richColors />
 
-            {/* Decorative background blur lights */}
-            <div className="absolute -top-32 -left-32 w-96 h-96 bg-[#00baf2]/20 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-[#002970]/40 rounded-full blur-3xl pointer-events-none" />
+            {/* Apple-style subtle ambient glow */}
+            <div className="absolute -top-40 -left-40 w-96 h-96 bg-amber-200/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-indigo-200/20 rounded-full blur-3xl pointer-events-none" />
 
             {/* Header Brand */}
-            <div className="mb-6 flex flex-col items-center text-center">
+            <div className="mb-8 flex flex-col items-center text-center">
                 <Link href="/" className="group flex items-center gap-3 transition">
-                    <div className="relative h-12 w-12">
-                        <div className="absolute inset-0 translate-y-1 rounded-2xl bg-[#0084b4]" />
-                        <div className="relative flex h-full w-full items-center justify-center rounded-2xl bg-[#00baf2] text-2xl font-black text-[#002970] shadow-lg group-hover:scale-105 transition-transform">
-                            P
-                        </div>
+                    <div className="h-10 w-10 rounded-2xl bg-[#1d1d1f] flex items-center justify-center text-white text-lg font-semibold shadow-sm group-hover:scale-105 transition-transform">
+                        
                     </div>
                     <div className="text-left">
-                        <div className="text-2xl font-extrabold text-white tracking-tight">
-                            Pay<span className="text-[#00baf2]">Flow</span>
+                        <div className="text-2xl font-semibold tracking-tight text-[#1d1d1f]">
+                            Pay<span className="text-[#0071e3]">Flow</span>
                         </div>
-                        <div className="text-[11px] uppercase tracking-[0.25em] text-white/70 font-semibold">
+                        <div className="text-[10px] tracking-wide text-[#86868b] font-medium uppercase">
                             Digital Wallet
                         </div>
                     </div>
@@ -85,14 +82,14 @@ export default function SigninPage() {
             </div>
 
             {/* Main Card */}
-            <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl border border-white/20 p-8 sm:p-10 relative backdrop-blur-xl">
-                {/* Tab switch */}
-                <div className="flex bg-slate-100 p-1 rounded-xl mb-6">
+            <div className="w-full max-w-md bg-white rounded-3xl shadow-[0_4px_30px_rgba(0,0,0,0.04)] border border-black/[0.06] p-8 sm:p-10 relative">
+                {/* Segmented Pill Switch */}
+                <div className="flex bg-[#f5f5f7] p-1 rounded-full mb-6">
                     <button
                         type="button"
                         onClick={() => setIsSignUp(false)}
-                        className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${
-                            !isSignUp ? "bg-white text-[#002970] shadow-sm font-bold" : "text-slate-500 hover:text-slate-800"
+                        className={`flex-1 py-1.5 text-xs font-medium rounded-full transition-all ${
+                            !isSignUp ? "bg-[#1d1d1f] text-white shadow-xs" : "text-[#86868b] hover:text-[#1d1d1f]"
                         }`}
                     >
                         Sign In
@@ -100,8 +97,8 @@ export default function SigninPage() {
                     <button
                         type="button"
                         onClick={() => setIsSignUp(true)}
-                        className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${
-                            isSignUp ? "bg-white text-[#002970] shadow-sm font-bold" : "text-slate-500 hover:text-slate-800"
+                        className={`flex-1 py-1.5 text-xs font-medium rounded-full transition-all ${
+                            isSignUp ? "bg-[#1d1d1f] text-white shadow-xs" : "text-[#86868b] hover:text-[#1d1d1f]"
                         }`}
                     >
                         Create Account
@@ -109,24 +106,24 @@ export default function SigninPage() {
                 </div>
 
                 <div className="mb-6">
-                    <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
-                        {isSignUp ? "Open PayFlow Wallet" : "Welcome back"}
+                    <h1 className="text-2xl font-semibold text-[#1d1d1f] tracking-tight">
+                        {isSignUp ? "Create your Wallet" : "Welcome Back"}
                     </h1>
-                    <p className="text-xs text-slate-500 mt-1">
+                    <p className="text-xs text-[#86868b] mt-1 leading-relaxed">
                         {isSignUp
-                            ? "Enter your mobile number to create your digital wallet with ₹0 balance."
-                            : "Enter your registered mobile number and password to access your wallet."}
+                            ? "Enter your mobile number to open your digital wallet account."
+                            : "Enter your phone number and password to access your balance."}
                     </p>
                 </div>
 
                 {/* Form */}
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+                        <label className="block text-xs font-semibold uppercase tracking-wider text-[#86868b] mb-1.5">
                             Mobile Number
                         </label>
-                        <div className="relative flex rounded-xl border border-slate-200 focus-within:border-[#00baf2] focus-within:ring-2 focus-within:ring-[#00baf2]/20 transition overflow-hidden">
-                            <span className="inline-flex items-center px-3 bg-slate-50 border-r border-slate-200 text-xs font-semibold text-slate-600">
+                        <div className="relative flex items-center bg-[#f5f5f7] rounded-2xl px-4 py-3 focus-within:bg-white focus-within:ring-2 focus-within:ring-black/10 transition-all">
+                            <span className="text-xs font-semibold text-[#86868b] mr-2">
                                 🇮🇳 +91
                             </span>
                             <input
@@ -134,101 +131,92 @@ export default function SigninPage() {
                                 required
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
-                                placeholder="10-digit mobile number"
-                                className="w-full px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
+                                placeholder="10-digit number"
+                                className="w-full bg-transparent text-sm font-medium text-[#1d1d1f] outline-none placeholder:text-[#86868b]"
                             />
                         </div>
                     </div>
 
                     <div>
-                        <div className="flex justify-between items-center mb-1.5">
-                            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
-                                Password
-                            </label>
-                        </div>
-                        <div className="relative rounded-xl border border-slate-200 focus-within:border-[#00baf2] focus-within:ring-2 focus-within:ring-[#00baf2]/20 transition overflow-hidden">
+                        <label className="block text-xs font-semibold uppercase tracking-wider text-[#86868b] mb-1.5">
+                            Password
+                        </label>
+                        <div className="relative flex items-center bg-[#f5f5f7] rounded-2xl px-4 py-3 focus-within:bg-white focus-within:ring-2 focus-within:ring-black/10 transition-all">
                             <input
                                 type={showPassword ? "text" : "password"}
                                 required
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                placeholder="Enter your password"
-                                className="w-full px-3 py-2.5 pr-10 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
+                                placeholder="Enter password"
+                                className="w-full bg-transparent text-sm font-medium text-[#1d1d1f] outline-none placeholder:text-[#86868b] pr-10"
                             />
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs"
+                                className="absolute right-4 text-xs text-[#86868b] hover:text-[#1d1d1f] font-medium"
                             >
                                 {showPassword ? "Hide" : "Show"}
                             </button>
                         </div>
                     </div>
 
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="w-full mt-2 py-3 px-4 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-[#002970] to-[#00baf2] hover:opacity-95 shadow-lg shadow-[#00baf2]/25 disabled:opacity-50 transition-all flex items-center justify-center gap-2"
-                    >
-                        {loading && (
-                            <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24">
-                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-                            </svg>
-                        )}
-                        <span>{loading ? "Verifying..." : isSignUp ? "Create Wallet Account" : "Sign In to Wallet"}</span>
-                    </button>
+                    <div className="pt-2">
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="w-full py-3.5 px-6 rounded-full font-medium text-sm text-white bg-[#1d1d1f] hover:bg-black active:scale-[0.98] disabled:opacity-40 transition-all shadow-sm flex items-center justify-center gap-2"
+                        >
+                            {loading && (
+                                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                            )}
+                            <span>{loading ? "Verifying..." : isSignUp ? "Create Wallet Account" : "Sign In to Wallet"}</span>
+                        </button>
+                    </div>
                 </form>
 
                 {/* Quick 1-click Test Accounts */}
-                <div className="mt-6 pt-5 border-t border-slate-100">
-                    <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 text-center mb-2.5">
-                        Quick Demo Logins (For Reviewers)
+                <div className="mt-6 pt-5 border-t border-black/[0.05]">
+                    <div className="text-[11px] font-semibold uppercase tracking-wider text-[#86868b] text-center mb-2.5">
+                        Demo Accounts
                     </div>
                     <div className="grid grid-cols-2 gap-2.5">
                         <button
                             type="button"
                             onClick={() => handleQuickLogin("1111111111", "alice")}
-                            className="bg-slate-50 hover:bg-[#e6f7fd] border border-slate-200 hover:border-[#00baf2] text-[#002970] text-xs font-semibold py-2 px-2.5 rounded-xl transition text-left flex flex-col"
+                            className="bg-[#f5f5f7] hover:bg-[#ebebed] text-[#1d1d1f] text-xs font-medium py-2.5 px-3 rounded-2xl transition active:scale-95 text-left flex flex-col"
                         >
-                            <span className="font-bold flex items-center justify-between">
-                                Alice <span>₹195</span>
+                            <span className="font-semibold flex items-center justify-between">
+                                Alice <span className="text-[#86868b] font-normal">₹195</span>
                             </span>
-                            <span className="text-[10px] text-slate-500">1111111111</span>
+                            <span className="text-[10px] text-[#86868b] font-mono mt-0.5">1111111111</span>
                         </button>
                         <button
                             type="button"
                             onClick={() => handleQuickLogin("2222222222", "bob")}
-                            className="bg-slate-50 hover:bg-[#e6f7fd] border border-slate-200 hover:border-[#00baf2] text-[#002970] text-xs font-semibold py-2 px-2.5 rounded-xl transition text-left flex flex-col"
+                            className="bg-[#f5f5f7] hover:bg-[#ebebed] text-[#1d1d1f] text-xs font-medium py-2.5 px-3 rounded-2xl transition active:scale-95 text-left flex flex-col"
                         >
-                            <span className="font-bold flex items-center justify-between">
-                                Bob <span>₹25</span>
+                            <span className="font-semibold flex items-center justify-between">
+                                Bob <span className="text-[#86868b] font-normal">₹25</span>
                             </span>
-                            <span className="text-[10px] text-slate-500">2222222222</span>
+                            <span className="text-[10px] text-[#86868b] font-mono mt-0.5">2222222222</span>
                         </button>
                     </div>
                 </div>
 
                 {/* Security footer badges */}
-                <div className="mt-6 flex items-center justify-center gap-4 text-[10px] text-slate-400">
-                    <span className="flex items-center gap-1">
-                        🔒 256-Bit SSL
-                    </span>
+                <div className="mt-6 flex items-center justify-center gap-4 text-[10px] text-[#86868b]">
+                    <span>🔒 256-Bit SSL</span>
                     <span>•</span>
-                    <span className="flex items-center gap-1">
-                        🛡️ Row-Level Lock
-                    </span>
+                    <span>🛡️ Row-Level Lock</span>
                     <span>•</span>
-                    <span className="flex items-center gap-1">
-                        ⚡ Instant Transfer
-                    </span>
+                    <span>⚡ Instant  Pay</span>
                 </div>
             </div>
 
             {/* Bottom copyright & disclaimer */}
-            <div className="mt-6 text-center text-xs text-white/70 space-y-1">
-                <div>PayFlow Digital Wallet &amp; E-Commerce Platform</div>
-                <div className="text-[10px] text-white/50">Portfolio Project by Akshat Singhai • Simulated Fintech Demonstration</div>
+            <div className="mt-8 text-center text-xs text-[#86868b] space-y-1">
+                <div>PayFlow Digital Wallet Platform</div>
+                <div className="text-[11px]">Portfolio Project by Akshat Singhai • Simulated Fintech Demonstration</div>
             </div>
         </div>
     );

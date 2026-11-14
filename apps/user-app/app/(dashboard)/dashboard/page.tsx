@@ -98,62 +98,93 @@ export default async function () {
     const { name, phone, amount, totalAdded, successCount, pendingCount, activity } = await getData();
 
     return <div className="w-full">
-        <div className="text-3xl text-[#002970] pt-8 mb-6 font-bold">
-            {greeting()}, {name}
+        {/* Apple-style clean header */}
+        <div className="pt-2 mb-8">
+            <div className="text-xs font-semibold tracking-wider uppercase text-[#86868b]">
+                {greeting()}
+            </div>
+            <h1 className="text-3xl font-semibold tracking-tight text-[#1d1d1f] mt-1">
+                {name}
+            </h1>
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-5 gap-8">
             {/* LEFT COLUMN */}
-            <div className="xl:col-span-3">
-                <div className="rounded-2xl p-6 text-white bg-gradient-to-r from-[#002970] to-[#00baf2] shadow-lg">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                            <div className="h-10 w-10 rounded-xl bg-white/20 flex items-center justify-center">
-                                <WalletIcon />
+            <div className="xl:col-span-3 space-y-8">
+                {/* Apple Card Titanium Wallet */}
+                <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-white via-[#fbfbfd] to-[#eff1f5] p-7 text-[#1d1d1f] border border-black/[0.08] shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
+                    {/* Iridescent shimmer */}
+                    <div className="absolute -top-16 -right-16 h-56 w-56 rounded-full bg-gradient-to-br from-amber-200/25 via-pink-200/25 to-indigo-200/25 blur-2xl pointer-events-none" />
+                    
+                    <div className="relative z-10">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                <div className="h-7 w-9 rounded-md bg-gradient-to-tr from-amber-200 via-amber-300 to-amber-100 border border-amber-400/50 shadow-inner flex items-center justify-center">
+                                    <div className="h-3 w-5 border border-amber-500/40 rounded-xs" />
+                                </div>
+                                <span className="text-xs font-semibold tracking-wider uppercase text-[#86868b]">
+                                    PayFlow  Card
+                                </span>
                             </div>
-                            <div className="text-sm opacity-80">Wallet Balance</div>
+                            {phone && <div className="text-xs font-mono tracking-widest text-[#86868b]">
+                                •••• {phone.slice(-4)}
+                            </div>}
                         </div>
-                        {phone && <div className="text-sm tracking-widest opacity-80">
-                            •••• {phone.slice(-4)}
-                        </div>}
-                    </div>
-                    <div className="text-4xl font-bold mt-4">₹ {rupees(amount)}</div>
-                    <div className="flex gap-3 mt-5">
-                        <Link href="/transfer" className="bg-white text-[#002970] text-sm font-semibold px-4 py-2 rounded-lg hover:bg-[#e6f7fd] transition">
-                            + Add
-                        </Link>
-                        <Link href="/p2p" className="bg-white/20 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-white/30 transition">
-                            Send
-                        </Link>
+
+                        <div className="mt-8">
+                            <div className="text-xs font-medium uppercase tracking-wider text-[#86868b]">
+                                Available Balance
+                            </div>
+                            <div className="text-4xl sm:text-5xl font-semibold tracking-tight text-[#1d1d1f] mt-1">
+                                ₹ {rupees(amount)}
+                            </div>
+                        </div>
+
+                        {/* Apple-style quick action pills */}
+                        <div className="flex flex-wrap items-center gap-3 mt-8 pt-5 border-t border-black/[0.05]">
+                            <Link href="/transfer" className="inline-flex items-center gap-1.5 bg-[#1d1d1f] hover:bg-black text-white text-xs font-medium px-5 py-2.5 rounded-full transition-all active:scale-95 shadow-sm">
+                                <span>+</span> Add Money
+                            </Link>
+                            <Link href="/p2p" className="inline-flex items-center gap-1.5 bg-black/[0.05] hover:bg-black/[0.08] text-[#1d1d1f] text-xs font-medium px-5 py-2.5 rounded-full transition-all active:scale-95">
+                                <span>↑</span> Send Cash
+                            </Link>
+                            <Link href="/shop" className="inline-flex items-center gap-1.5 bg-black/[0.05] hover:bg-black/[0.08] text-[#1d1d1f] text-xs font-medium px-5 py-2.5 rounded-full transition-all active:scale-95">
+                                Store
+                            </Link>
+                        </div>
                     </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-5 mt-8 pb-3">
-                    <Button3D href="/transfer" label="Add Money" icon={<PlusIcon />} />
-                    <Button3D href="/p2p" label="Send Money" icon={<SendIcon />} />
+                {/* Quick Action Tiles */}
+                <div className="grid grid-cols-3 gap-4">
+                    <Button3D href="/transfer" label="Deposit" icon={<PlusIcon />} />
+                    <Button3D href="/p2p" label="Transfer" icon={<SendIcon />} />
                     <Button3D href="/transactions" label="History" icon={<ClockIcon />} />
                 </div>
 
-                <div className="pt-8">
-                    <Card title="Recent Activity">
+                {/* Recent Activity */}
+                <div>
+                    <Card title="Latest Activity">
                         {activity.length === 0
-                            ? <div className="text-center py-8 text-slate-500">No activity yet</div>
-                            : <div className="pt-2">
-                                {activity.map((a, i) => <div key={i} className="flex justify-between items-center py-3 border-b border-slate-50 last:border-0">
-                                    <div className="flex items-center gap-3">
-                                        <div className={`h-10 w-10 rounded-full flex items-center justify-center text-sm font-bold ${a.sign === "-" ? "bg-red-50 text-red-600" : "bg-[#e6f7fd] text-[#002970]"}`}>
+                            ? <div className="text-center py-10 text-xs font-medium text-[#86868b]">No activity yet</div>
+                            : <div className="divide-y divide-black/[0.04]">
+                                {activity.map((a, i) => <div key={i} className="flex justify-between items-center py-3.5 first:pt-1 last:pb-1">
+                                    <div className="flex items-center gap-3.5">
+                                        <div className={`h-10 w-10 rounded-full flex items-center justify-center text-sm font-semibold ${
+                                            a.sign === "-" ? "bg-black/[0.04] text-[#1d1d1f]" : "bg-emerald-50 text-emerald-600"
+                                        }`}>
                                             {a.sign === "-" ? "↑" : "↓"}
                                         </div>
                                         <div>
-                                            <div className="text-sm font-medium text-slate-800">{a.title}</div>
-                                            <div className="text-slate-500 text-xs mt-0.5">{a.time.toDateString()}</div>
+                                            <div className="text-sm font-medium tracking-tight text-[#1d1d1f]">{a.title}</div>
+                                            <div className="text-[#86868b] text-xs mt-0.5">{a.time.toDateString()}</div>
                                         </div>
                                     </div>
                                     <div className="flex flex-col items-end gap-1">
-                                        <div className={`font-semibold ${a.sign === "-" ? "text-red-600" : a.status === "Success" ? "text-green-600" : "text-slate-400"}`}>
+                                        <div className={`text-sm font-semibold tracking-tight ${a.sign === "-" ? "text-[#1d1d1f]" : "text-emerald-600"}`}>
                                             {a.sign} ₹ {rupees(a.amount)}
                                         </div>
-                                        <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${pill[a.status] || ""}`}>
+                                        <span className={`text-[10px] font-medium px-2.5 py-0.5 rounded-full border ${pill[a.status] || "bg-black/[0.03] text-[#86868b] border-transparent"}`}>
                                             {a.status}
                                         </span>
                                     </div>
@@ -164,33 +195,42 @@ export default async function () {
             </div>
 
             {/* RIGHT COLUMN */}
-            <div className="xl:col-span-2 space-y-5">
-                <StatCard label="Total added" value={`₹ ${rupees(totalAdded)}`} color="text-[#002970]" />
-                <div className="grid grid-cols-2 gap-5">
-                    <StatCard label="Successful deposits" value={String(successCount)} color="text-green-600" />
-                    <StatCard label="Pending deposits" value={String(pendingCount)} color="text-amber-500" />
+            <div className="xl:col-span-2 space-y-6">
+                <StatCard label="Total Deposited" value={`₹ ${rupees(totalAdded)}`} />
+                <div className="grid grid-cols-2 gap-4">
+                    <StatCard label="Completed" value={String(successCount)} subtitle="Transactions" />
+                    <StatCard label="In Progress" value={String(pendingCount)} subtitle="Pending" />
                 </div>
 
-                <div className="rounded-2xl p-6 bg-gradient-to-br from-[#00baf2] to-[#002970] text-white shadow-md">
-                    <div className="text-xs uppercase tracking-widest opacity-80">Offer</div>
-                    <div className="text-xl font-bold mt-1">Add ₹500, get a reward</div>
-                    <div className="text-sm opacity-80 mt-1">Instant cashback credited to your wallet balance.</div>
+                {/* Apple Card Daily Cash offer banner */}
+                <div className="rounded-3xl p-7 bg-[#1d1d1f] text-white shadow-sm relative overflow-hidden">
+                    <div className="absolute -top-10 -right-10 h-32 w-32 bg-white/[0.06] rounded-full blur-xl pointer-events-none" />
+                    <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#86868b]">
+                        <span></span> Daily Cash
+                    </div>
+                    <div className="text-xl font-semibold tracking-tight mt-2">
+                        Get instant rewards on deposits
+                    </div>
+                    <p className="text-xs text-white/70 mt-1.5 leading-relaxed">
+                        Add ₹500 or more via simulated NetBanking to enjoy instant simulated balance credits with zero fees.
+                    </p>
+                    <Link href="/transfer" className="inline-block mt-4 text-xs font-medium text-white underline underline-offset-4 hover:text-white/80">
+                        Deposit now →
+                    </Link>
                 </div>
             </div>
         </div>
     </div>
 }
 
-function StatCard({ label, value, color }: { label: string; value: string; color: string }) {
-    return <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 transition hover:-translate-y-1 hover:shadow-md">
-        <div className="text-xs uppercase tracking-wider text-slate-400">{label}</div>
-        <div className={`text-2xl font-bold mt-2 ${color}`}>{value}</div>
+function StatCard({ label, value, subtitle }: { label: string; value: string; subtitle?: string }) {
+    return <div className="bg-white rounded-3xl border border-black/[0.05] shadow-[0_2px_12px_rgba(0,0,0,0.02)] p-6 transition-all hover:shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+        <div className="text-xs uppercase tracking-wider font-semibold text-[#86868b]">{label}</div>
+        <div className="text-2xl font-semibold tracking-tight text-[#1d1d1f] mt-1.5">{value}</div>
+        {subtitle && <div className="text-[11px] text-[#86868b] mt-0.5">{subtitle}</div>}
     </div>
 }
 
-function WalletIcon() {
-    return <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-6 w-6"><path strokeLinecap="round" strokeLinejoin="round" d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3" /></svg>
-}
 function PlusIcon() {
     return <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
 }

@@ -8,34 +8,34 @@ export default function Layout({
   children: React.ReactNode;
 }): JSX.Element {
   return (
-    <div className="flex min-h-screen bg-[#f5f9fc]">
+    <div className="flex min-h-screen bg-[#f5f5f7] text-[#1d1d1f]">
         <Toaster position="bottom-right" richColors />
-        {/* Desktop Sidebar */}
-        <aside className="hidden md:block w-64 shrink-0 bg-white border-r border-slate-200 pt-8 shadow-sm">
-            <div className="px-6 pb-4 text-xs font-semibold uppercase tracking-wider text-slate-400">
-                Menu
+        {/* macOS-style Sidebar */}
+        <aside className="hidden md:block w-64 shrink-0 border-r border-black/[0.04] px-3 pt-7">
+            <div className="px-4 pb-3 text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">
+                Navigation
             </div>
-            <div>
-                <SidebarItem href={"/dashboard"} icon={<HomeIcon />} title="Home" />
-                <SidebarItem href={"/shop"} icon={<StoreIcon />} title="Store" />
-                <SidebarItem href={"/transfer"} icon={<TransferIcon />} title="Transfer" />
-                <SidebarItem href={"/transactions"} icon={<TransactionsIcon />} title="Transactions" />
-                <SidebarItem href={"/p2p"} icon={<P2PTransferIcon />} title="P2P Transfer" />
+            <div className="space-y-0.5">
+                <SidebarItem href={"/dashboard"} icon={<HomeIcon />} title="Overview" />
+                <SidebarItem href={"/shop"} icon={<StoreIcon />} title="Apple Store" />
+                <SidebarItem href={"/transfer"} icon={<TransferIcon />} title="Add Money" />
+                <SidebarItem href={"/transactions"} icon={<TransactionsIcon />} title="Activity" />
+                <SidebarItem href={"/p2p"} icon={<P2PTransferIcon />} title="Pay Cash" />
             </div>
         </aside>
 
         {/* Main Content Area */}
-        <main className="flex-1 min-w-0 px-4 sm:px-8 pb-24 md:pb-10">
+        <main className="flex-1 min-w-0 px-4 sm:px-8 lg:px-10 py-6 pb-28 md:pb-12 max-w-6xl">
             {children}
         </main>
 
-        {/* Mobile Bottom Navigation */}
-        <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-sm border-t border-slate-200 flex justify-around py-1 shadow-lg md:hidden">
-            <MobileNavItem href={"/dashboard"} icon={<HomeIcon />} title="Home" />
+        {/* Floating iOS-style Mobile Tab Bar */}
+        <nav className="fixed bottom-4 left-4 right-4 z-40 bg-white/85 backdrop-blur-xl border border-black/[0.06] rounded-3xl flex justify-around py-2 shadow-[0_8px_30px_rgba(0,0,0,0.08)] md:hidden">
+            <MobileNavItem href={"/dashboard"} icon={<HomeIcon />} title="Overview" />
             <MobileNavItem href={"/shop"} icon={<StoreIcon />} title="Store" />
-            <MobileNavItem href={"/transfer"} icon={<TransferIcon />} title="Transfer" />
+            <MobileNavItem href={"/transfer"} icon={<TransferIcon />} title="Deposit" />
             <MobileNavItem href={"/transactions"} icon={<TransactionsIcon />} title="Activity" />
-            <MobileNavItem href={"/p2p"} icon={<P2PTransferIcon />} title="P2P" />
+            <MobileNavItem href={"/p2p"} icon={<P2PTransferIcon />} title="Pay Cash" />
         </nav>
     </div>
   );
