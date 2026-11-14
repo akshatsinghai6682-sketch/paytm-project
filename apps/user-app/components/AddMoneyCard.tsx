@@ -7,7 +7,6 @@ import { TextInput } from "@repo/ui/textinput";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { createOnRampTransaction } from "../app/lib/actions/createOnRamptxn";
-import { payTransaction } from "../app/lib/actions/mockBank";
 
 const SUPPORTED_BANKS = [{
     name: "HDFC Bank",
@@ -46,32 +45,22 @@ export const AddMoney = () => {
                     return;
                 }
                 setLoading(true);
-                toast.info(`Connecting to ${provider} simulated gateway...`);
+                toast.info(`Redirecting to ${provider} NetBanking...`);
                 try {
                     const res = await createOnRampTransaction(provider, value);
                     if (res?.message !== "Done" || !res.token) {
-                        toast.error("Couldn't start the deposit. Please log in and retry.");
+                        toast.error("Couldn't initialize deposit. Please log in and retry.");
                         setLoading(false);
                         return;
                     }
 
-                    // Complete simulated bank authorization and balance credit
-                    const payRes = await payTransaction(res.token);
-                    if (payRes.ok) {
-                        toast.success(`₹${value.toLocaleString("en-IN")} credited to your wallet balance from ${provider}!`);
-                        setTimeout(() => {
-                            router.refresh();
-                        }, 500);
-                    } else {
-                        toast.error(payRes.message || "Simulated deposit failed");
-                    }
+                    router.push(`/bank/gateway?token=${res.token}&provider=${encodeURIComponent(provider)}&amount=${value}`);
                 } catch (e) {
-                    toast.error("Failed to complete deposit. Please retry.");
-                } finally {
+                    toast.error("Failed to connect to gateway. Please retry.");
                     setLoading(false);
                 }
             }}>
-            {loading ? "Processing Deposit..." : "Add Money"}
+            {loading ? "Redirecting to Bank..." : "Add Money"}
             </Button>
         </div>
     </div>
