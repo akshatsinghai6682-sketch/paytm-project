@@ -26,10 +26,10 @@ export const Button = ({ onClick, children, disabled }: ButtonProps) => {
       onClick={handleClick}
       type="button"
       disabled={loading || disabled}
-      className="inline-flex items-center justify-center gap-2 text-white bg-[#1d1d1f] hover:bg-black active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-black/10 font-medium rounded-full text-sm px-6 py-3 transition-all duration-150 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+      className="inline-flex items-center justify-center gap-2 text-white bg-[#002970] hover:bg-[#0a3a8a] focus:outline-none focus:ring-4 focus:ring-[#00baf2]/40 font-semibold rounded-lg text-sm px-6 py-2.5 transition disabled:opacity-60 disabled:cursor-not-allowed"
     >
       {loading && (
-        <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+        <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
       )}
       {loading ? "Processing…" : children}
     </button>

@@ -62,46 +62,41 @@ export default async function () {
 
     return (
         <div className="w-full">
-            <div className="pt-2 mb-8">
-                <div className="text-xs font-semibold tracking-wider uppercase text-[#86868b]">
-                    Instant Peer-to-Peer
-                </div>
-                <h1 className="text-3xl font-semibold tracking-tight text-[#1d1d1f] mt-1">
-                     Pay Cash
-                </h1>
+            <div className="text-3xl text-[#002970] pt-8 mb-6 font-bold">
+                P2P Transfer
             </div>
-            <div className="grid grid-cols-1 gap-8 xl:grid-cols-2">
+            <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
                 <div>
                     <SendCard />
                 </div>
                 <div className="space-y-6">
                     <BalanceCard amount={balance.amount} locked={balance.locked} />
-                    <Card title="Transfer History">
+                    <Card title="Recent Transfers">
                         {transfers.length === 0 ? (
-                            <div className="text-center py-10 text-xs font-medium text-[#86868b]">
+                            <div className="text-center py-8 text-slate-500 text-sm">
                                 No transfers yet
                             </div>
                         ) : (
-                            <div className="divide-y divide-black/[0.04]">
+                            <div className="pt-2 divide-y divide-slate-50">
                                 {transfers.map(t => (
-                                    <div key={t.id} className="flex justify-between items-center py-3.5 first:pt-1 last:pb-1">
-                                        <div className="flex items-center gap-3.5">
-                                            <div className={`h-10 w-10 rounded-full flex items-center justify-center text-xs font-bold ${
-                                                t.type === "sent" ? "bg-black/[0.04] text-[#1d1d1f]" : "bg-emerald-50 text-emerald-600"
+                                    <div key={t.id} className="flex justify-between items-center py-3">
+                                        <div className="flex items-center gap-3">
+                                            <div className={`h-10 w-10 rounded-full flex items-center justify-center text-sm font-bold ${
+                                                t.type === "sent" ? "bg-red-50 text-red-600" : "bg-[#e6f7fd] text-[#002970]"
                                             }`}>
                                                 {t.type === "sent" ? "↑" : "↓"}
                                             </div>
                                             <div>
-                                                <div className="text-sm font-medium tracking-tight text-[#1d1d1f]">
+                                                <div className="text-sm font-medium text-slate-800">
                                                     {t.type === "sent" ? `Sent to ${t.name}` : `Received from ${t.name}`}
                                                 </div>
-                                                <div className="text-[#86868b] text-xs mt-0.5">
+                                                <div className="text-slate-500 text-xs mt-0.5">
                                                     {t.time.toDateString()}
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className={`text-sm font-semibold tracking-tight ${
-                                            t.type === "sent" ? "text-[#1d1d1f]" : "text-emerald-600"
+                                        <div className={`font-semibold ${
+                                            t.type === "sent" ? "text-red-600" : "text-green-600"
                                         }`}>
                                             {t.type === "sent" ? "-" : "+"} ₹ {(t.amount / 100).toLocaleString("en-IN")}
                                         </div>

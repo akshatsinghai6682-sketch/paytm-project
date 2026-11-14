@@ -59,15 +59,10 @@ export default async function () {
     const items = await getActivity();
 
     return <div className="w-full">
-        <div className="pt-2 mb-8">
-            <div className="text-xs font-semibold tracking-wider uppercase text-[#86868b]">
-                Wallet Statement
-            </div>
-            <h1 className="text-3xl font-semibold tracking-tight text-[#1d1d1f] mt-1">
-                Activity & History
-            </h1>
+        <div className="text-3xl text-[#002970] pt-8 mb-6 font-bold">
+            Transactions
         </div>
-        <div className="max-w-4xl">
+        <div className="max-w-3xl">
             <TransactionsList items={items} />
         </div>
     </div>
