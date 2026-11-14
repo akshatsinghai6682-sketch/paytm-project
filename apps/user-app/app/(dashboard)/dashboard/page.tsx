@@ -17,7 +17,7 @@ type Activity = {
 async function getData() {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
-        redirect("/api/auth/signin");
+        redirect("/signin");
     }
     const userId = Number(session.user.id);
 

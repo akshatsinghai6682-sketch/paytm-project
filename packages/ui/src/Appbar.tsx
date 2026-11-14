@@ -14,7 +14,7 @@ export const Appbar = ({
     onSignout
 }: AppbarProps) => {
     return <div className="flex justify-between items-center px-6 py-3 bg-[#002970] shadow-md">
-        <div className="group flex items-center gap-3 cursor-pointer">
+        <a href={user ? "/dashboard" : "/"} className="group flex items-center gap-3 cursor-pointer">
             {/* 3D logo tile */}
             <div className="relative h-10 w-10">
                 <div className="absolute inset-0 translate-y-1 rounded-xl bg-[#0a4fa8] transition-all duration-300 group-hover:translate-y-1.5" />
@@ -32,7 +32,7 @@ export const Appbar = ({
                     Digital Wallet
                 </div>
             </div>
-        </div>
+        </a>
 
         <div className="flex items-center gap-4">
             {user?.name && <div className="text-sm text-white/80 hidden sm:block">

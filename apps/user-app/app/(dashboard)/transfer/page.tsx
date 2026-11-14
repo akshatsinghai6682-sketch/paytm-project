@@ -9,7 +9,7 @@ import { authOptions } from "../../lib/auth";
 async function getBalance() {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
-        redirect("/api/auth/signin");
+        redirect("/signin");
     }
     const balance = await prisma.balance.findFirst({
         where: {
@@ -25,7 +25,7 @@ async function getBalance() {
 async function getOnRampTransactions() {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
-        redirect("/api/auth/signin");
+        redirect("/signin");
     }
     const txns = await prisma.onRampTransaction.findMany({
         where: {
