@@ -1,10 +1,21 @@
 import db from "@repo/db/client";
-import CredentialsProvider from "next-auth/providers/credentials"
+import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
+import { decode as defaultDecode, encode as defaultEncode } from "next-auth/jwt";
 
 export const authOptions = {
     session: {
         strategy: "jwt" as const,
+    },
+    jwt: {
+        encode: (params: any) => defaultEncode(params),
+        decode: async (params: any) => {
+            try {
+                return await defaultDecode(params);
+            } catch (e) {
+                return null;
+            }
+        }
     },
     providers: [
       CredentialsProvider({
